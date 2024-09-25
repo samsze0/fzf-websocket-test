@@ -2,4 +2,4 @@ For testing fzf-websocket
 
 Demo:
 
-https://github.com/user-attachments/assets/6591aa57-1324-4d8e-bc37-2252e69ca1db
+https://github.com/user-attachments/assets/a8c7ed9f-2d5e-4b66-8db5-6f316f2cf668
