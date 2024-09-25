@@ -1,43 +1,25 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"log"
-	"net/http"
-
-	"github.com/gorilla/websocket"
+	"os"
 )
 
-var apiKey = "test"
-var port = 12010
-
-func startClient(port int) {
-	dialer := websocket.DefaultDialer
-
-	req, err := http.NewRequest("GET", fmt.Sprintf("ws://localhost:%d", port), nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	req.Header.Set("API-KEY", apiKey)
-
-	c, _, err := dialer.DialContext(context.Background(), req.URL.String(), req.Header)
-	if err != nil {
-		log.Fatal("dial:", err)
-	}
-	defer c.Close()
-
-	for {
-		_, message, err := c.ReadMessage()
-		if err != nil {
-			log.Println("err:", err)
-			return
-		}
-		log.Printf("received: %s", message)
-	}
-}
-
 func main() {
-	startClient(port)
+	if len(os.Args) != 2 {
+		fmt.Println("Usage: go run main.go <client|server>")
+		os.Exit(1)
+	}
+
+	mode := os.Args[1]
+
+	switch mode {
+	case "client":
+		startClient()
+	case "server":
+		// startServer()
+	default:
+		fmt.Println("Invalid argument. Use 'client' or 'server'.")
+		os.Exit(1)
+	}
 }
